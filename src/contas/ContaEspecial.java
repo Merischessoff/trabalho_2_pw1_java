@@ -2,7 +2,6 @@ package contas;
 import java.util.ArrayList;
 import java.util.List;
 import agencias.Agencia;
-import java.io.Serializable;
 import clientes.Cliente;
 
 public class ContaEspecial extends Conta implements Comparable<ContaEspecial>{
@@ -51,10 +50,11 @@ public class ContaEspecial extends Conta implements Comparable<ContaEspecial>{
 		if(this.clientes.size() > 0) {
 			String clientes = "";
 			for(Cliente a: this.clientes){
-				clientes += "Cliente[cpf=" + a.getCpf() + ",nome=" + a.getNome() + "]";
+				clientes += "Cliente[cpf=" + a.getCpf() + ",nome=" + a.getNome() + "]-\n";
 			}
-			return "ContaEspecial [limite=" +limite  +  ", saldo=" + getSaldo() + 
-					", numero=" + getNumero() + ","+ getAgencia() + "], " + clientes ;
+			return "ContaEspecial [limite=" +limite  +  ", saldo=" + getSaldo() + ", numero=" + getNumero() 
+					+ "\n"+ getAgencia()+"-"
+					+ "\n" + clientes + "];" ;
 		}else {
 			return "ContaEspecial necessida de pelo menos 1 cliente cadastrado!";
 		}
