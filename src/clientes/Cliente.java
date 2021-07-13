@@ -5,27 +5,27 @@ import contas.ContaEspecial;
 import util.Validador;
 
 public class Cliente implements Validador{
-	private String cpf = "";
-	private String nome = "";	
+	private String cpfCliente = "";
+	private String nomeCliente = "";	
 	public Cliente() { }
 	
 	public Cliente(String cpf, String nome) {
 		super();
-		this.cpf = cpf;
-		this.nome = nome;
+		this.cpfCliente = cpf;
+		this.nomeCliente = nome;
 	}
 	
-	public String getCpf() {
-		return cpf;
+	public String getCpfCliente() {
+		return cpfCliente;
 	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCpfCliente(String cpf) {
+		this.cpfCliente = cpf;
 	}
-	public String getNome() {
-		return nome;
+	public String getNomeCliente() {
+		return nomeCliente;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeCliente(String nome) {
+		this.nomeCliente = nome;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Cliente implements Validador{
 
 	@Override
 	public String toString() {
-		return "Cliente [cpf=" + cpf + ", nome=" + nome + "]";
+		return "Cliente [cpfCliente=" + cpfCliente + ", nomeCliente=" + nomeCliente + "]";
 	}
 	
 	

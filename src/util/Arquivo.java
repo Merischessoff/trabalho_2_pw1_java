@@ -38,6 +38,7 @@ public class Arquivo {
 		}
 	}
 	
+	//Gambiarra monstra para montar os objetos que estão no arquivo
 	public  TreeSet<ContaEspecial> montaObjetos() {
 		try {
 			TreeSet<ContaEspecial> conjunto = new TreeSet<ContaEspecial>();
@@ -45,60 +46,77 @@ public class Arquivo {
 			String arqConta[] = arquivo.split(";");
 			if(arqConta.length > 0) {
 				for(int i=0; i < arqConta.length; i++) {
-					String arqCliente[] = arqConta[i].split("-");
 					ContaEspecial c = new ContaEspecial();
+					Cliente c2 = new Cliente();
 					String arqAux[] = arqConta[i].split(",");
 					int j = 0;
 					while(j < arqAux.length) {
 						if(arqAux[j].contains("limite"))
 							c.setLimite(Double.parseDouble(
-									arqAux[j].replace("ContaEspecial", "")
+									arqAux[j]
+									.replace("ContaEspecial", "")
 									.replace("[", "")
 									.replace("limite", "")
-									.replace("=", "").trim()));
+									.replace("=", "")
+									.trim()));
 						if(arqAux[j].contains("saldo"))
-							c.setLimite(Double.parseDouble(
-									arqAux[j].replace("saldo", "")
-									.replace("=", "").trim()));
+							c.setSaldo(Double.parseDouble(
+									arqAux[j]
+									.replace("saldo", "")
+									.replace("=", "")
+									.trim()));
 						if(arqAux[j].contains("numero") && !arqAux[j].contains("Agencia"))
 							c.setNumero(Long.parseLong(
-									arqAux[j].replace("numero", "")
+									arqAux[j]
+									.replace("numero", "")
 									.replace("=", "")
-									.replace(".0", "").trim()));
-						if(arqAux[j].contains("numero") && arqAux[j].contains("Agencia"))
-							c.getAgencia().setNumero(Integer.parseInt(
-									arqAux[j].replace("numero", "")
+									.replace(".0", "")
+									.trim()));
+						if(arqAux[j].contains("numeroAg") && arqAux[j].contains("Agencia"))
+							c.getAgencia().setNumeroAg(Integer.parseInt(
+									arqAux[j]
+									.replace("numeroAg", "")
 									.replace("Agencia", "")
 									.replace("[", "")
-									.replace("=", "").trim()));
+									.replace("=", "")
+									.trim()));
 						if(arqAux[j].contains("endereco"))
-							c.getAgencia().setEndereco(
-									arqAux[j].replace("endereco", "")
+							c.getAgencia().setEnderecoAg(
+									arqAux[j]
+									.replace("enderecoAg", "")
 									.replace("=", "")
-									.replace("]", "").trim());
-						j++;
-					}
-					
-					j=0;
-					Cliente c2 = new Cliente();
-					while(j < arqCliente.length) {
-						if(arqCliente[j].contains("cpf"))
-							c2.setCpf(arqCliente[j]
-									.replace("Cliente", "")
-									.replace("cpf", "")
-									.replace("[", "")
-									.replace("=", "").trim());
-						
-						if(arqCliente[j].contains("nome"))
-							c2.setNome(arqCliente[i]
-									.replace("nome", "")
-									.replace("=", "")
-									.replace("]", "").trim());
+									.replace("]", "")
+									.trim());
+						if(arqAux[j].contains("Cliente") && j+1 < arqAux.length) {
+							if(arqAux[j].contains("cpfCliente"))
+								c2.setCpfCliente(arqAux[j]
+										.replace("Cliente", "")
+										.replace("[", "")
+										.replace("cpf", "")
+										.replace("=", "")
+										.replace("nome", "")
+										.replace("]", "")
+										.replace(c2.getNomeCliente(), "").trim());
 							
+							if(arqAux[j+1].contains("nomeCliente"))
+								c2.setNomeCliente(arqAux[j+1]
+										.replace("nome", "")
+										.replace("Cliente", "")
+										.replace("cpf", "")
+										.replace("=", "")
+										.replace("]", "")
+										.replace("[", "")
+										.replace(c2.getCpfCliente(), "").trim()
+										);
+							
+							if(!c2.getCpfCliente().equalsIgnoreCase("") && !c2.getNomeCliente().equalsIgnoreCase(""))
+								c.getClientes().add(c2); c2 = new Cliente();
+						}
+						
 						j++;
-						c.getClientes().add(c2);
 					}
 					conjunto.add(c);
+
 				}
 			}
 			return conjunto;

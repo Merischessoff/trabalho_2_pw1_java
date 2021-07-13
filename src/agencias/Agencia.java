@@ -1,33 +1,33 @@
 package agencias;
 
 public final class  Agencia {
-	private int numero = 0;
-	private String endereco = "";
+	private int numeroAg = 0;
+	private String enderecoAg = "";
 	
 	public Agencia() {
 	}
 	
 	public Agencia(int numero, String endereco) {
 		super();
-		this.numero = numero;
-		this.endereco = endereco;
+		this.numeroAg = numero;
+		this.enderecoAg = endereco;
 	}
 	
-	public String getEndereco() {
-		return endereco;
+	public String getEnderecoAg() {
+		return enderecoAg;
 	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setEnderecoAg(String endereco) {
+		this.enderecoAg = endereco;
 	}
-	public int getNumero() {
-		return numero;
+	public int getNumeroAg() {
+		return numeroAg;
 	}
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setNumeroAg(int numero) {
+		this.numeroAg = numero;
 	}
 	@Override
 	public String toString() {
-		return "Agencia [numero=" + numero + ", endereco=" + endereco + "]";
+		return "Agencia [numeroAg=" + numeroAg + ", enderecoAg=" + enderecoAg + "]";
 	}
 	
 	

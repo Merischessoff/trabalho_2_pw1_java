@@ -50,10 +50,10 @@ public class ContaEspecial extends Conta implements Comparable<ContaEspecial>{
 		if(this.clientes.size() > 0) {
 			String clientes = "";
 			for(Cliente a: this.clientes){
-				clientes += "Cliente[cpf=" + a.getCpf() + ",nome=" + a.getNome() + "]-\n";
+				clientes += "Cliente[cpfCliente=" + a.getCpfCliente() + ",nomeCliente=" + a.getNomeCliente() + "],\n";
 			}
-			return "ContaEspecial [limite=" +limite  +  ", saldo=" + getSaldo() + ", numero=" + getNumero() 
-					+ "\n"+ getAgencia()+"-"
+			return "ContaEspecial[limite=" +limite  +  ",saldo=" + getSaldo() + ",numero=" + getNumero()+","
+					+ "\n"+ getAgencia()+","
 					+ "\n" + clientes + "];" ;
 		}else {
 			return "ContaEspecial necessida de pelo menos 1 cliente cadastrado!";

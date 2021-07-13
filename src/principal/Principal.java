@@ -52,58 +52,54 @@ public class Principal {
         	int opcao = montaMenu();
             switch(opcao){
             	case 1:
-            		listaConta = arquivos.montaObjetos();
-            		for(ContaEspecial aux:listaConta) {
-                		JOptionPane.showMessageDialog(null, aux.toString()); 
-            		}
             		//1 – Cadastrar Conta Especial
-//            		boolean cadastra = true;
-//            		while(cadastra) {
-//            	    	List <Cliente> listaCliente = new ArrayList<Cliente>();
-//            	    	int clienteCadastra = 0;
-//	            		while(clienteCadastra==0) {
-//	            	    	Cliente c = new Cliente();
-//		                    String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente.");
-//		                    c.setNome(nome);
-//		                    String cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
-//		                    boolean a = c.validaCpf(cpf);
-//		                    if(a) {
-//		                    	c.setCpf(cpf);
-//		                    }else {
-//			                    while(!a) {
-//			                    	int aux = Integer.parseInt(JOptionPane.showInputDialog(null, "Cpf inválido. para inserir novo cpf, digite 1, para sair digite 2"));
-//			                    	if(aux==1) {
-//			                    		cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
-//			                    		a = c.validaCpf(cpf);
-//			                    		if(a)
-//			                    			c.setCpf(cpf);
-//			                    	}else {
-//			                    		System.exit(0);
-//			                    	}
-//			                    }
-//		                    }
-//		                    listaCliente.add(c);
-//		                    clienteCadastra = JOptionPane.showConfirmDialog(null, "Gostaria de cadastrar mais 1 cliente na conta especial?");
-//	            		}
-//	                    
-//	                    int agencia = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da agência."));
-//	                    String endAgencia = "Padrão";
-//	                    Agencia aG = new Agencia(agencia, endAgencia);
-//	                    double saldoConta = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o saldo da conta especial."));
-//	                    long numConta = Long.parseLong(JOptionPane.showInputDialog(null, "Digite o numero da conta."));
-//	                    double limContaEspecial = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o limite da conta especial."));
-//	                    ContaEspecial contaEspecial = new ContaEspecial(saldoConta, numConta, aG, limContaEspecial, listaCliente);
-//	                    listaConta.add(contaEspecial);
-//	                    cadastra = false;
-//            		}
-//            		String contas = "";
-//            		for (ContaEspecial aux : listaConta) {
-//                        if(aux != null) {
-//                        	contas += aux.toString() + "\n;";
-//                        }
-//                    }
-//            		arquivos.montaObjetos();
-//            		arquivos.gravaObJetosArquivo(contas);
+            		boolean cadastra = true;
+            		while(cadastra) {
+            	    	List <Cliente> listaCliente = new ArrayList<Cliente>();
+            	    	int clienteCadastra = 0;
+	            		while(clienteCadastra==0) {
+	                		listaConta = arquivos.montaObjetos();
+	            	    	Cliente c = new Cliente();
+		                    String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente.");
+		                    c.setNomeCliente(nome);
+		                    String cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
+		                    boolean a = c.validaCpf(cpf);
+		                    if(a) {
+		                    	c.setCpfCliente(cpf);
+		                    }else {
+			                    while(!a) {
+			                    	int aux = Integer.parseInt(JOptionPane.showInputDialog(null, "Cpf inválido. para inserir novo cpf, digite 1, para sair digite 2"));
+			                    	if(aux==1) {
+			                    		cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
+			                    		a = c.validaCpf(cpf);
+			                    		if(a)
+			                    			c.setCpfCliente(cpf);
+			                    	}else {
+			                    		System.exit(0);
+			                    	}
+			                    }
+		                    }
+		                    listaCliente.add(c);
+		                    clienteCadastra = JOptionPane.showConfirmDialog(null, "Gostaria de cadastrar mais 1 cliente na conta especial?");
+	            		}
+	                    
+	                    int agencia = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da agência."));
+	                    String endAgencia = "Padrão";
+	                    Agencia aG = new Agencia(agencia, endAgencia);
+	                    double saldoConta = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o saldo da conta especial."));
+	                    long numConta = Long.parseLong(JOptionPane.showInputDialog(null, "Digite o numero da conta."));
+	                    double limContaEspecial = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o limite da conta especial."));
+	                    ContaEspecial contaEspecial = new ContaEspecial(saldoConta, numConta, aG, limContaEspecial, listaCliente);
+	                    listaConta.add(contaEspecial);
+	                    cadastra = false;
+            		}
+            		String contas = "";
+            		for (ContaEspecial aux : listaConta) {
+                        if(aux != null) {
+                        	contas += aux.toString() + "\n;";
+                        }
+                    }
+            		arquivos.gravaObJetosArquivo(contas);
                     break;
                 case 2:
 	                //2 – Pesquisar Conta Especial por nome do cliente
@@ -144,7 +140,7 @@ public class Principal {
         	    	limite, saldo, numero,
         	          	agencia[numero,endereco]
         	 		]
-        	 		Cliente[cpf,nome]*/
+        	 		Cliente[cpf,nome]*/            		
                     break; 
                 case 5:
                 	//Debitar valor da Conta Especial usando o seu número
@@ -152,7 +148,16 @@ public class Principal {
                 	    	limite, saldo, numero,
                 	          	agencia[numero,endereco]
                 	 ]
-                	 Cliente[cpf,nome]*/	
+                	 Cliente[cpf,nome]*/
+                	String contasArquivo2 = arquivos.LeArquivo();
+                	String contasArquivoVetor2[] = contasArquivo2.split(";");
+                	String aux3 = "";
+                	if(!contasArquivoVetor2.equals(null)) {
+	                	for (int i=0; i < contasArquivoVetor2.length; i++) {
+			                aux3 += contasArquivoVetor2[i] + "\n";
+		               	}
+	                	System.out.println("Contas Encontradas \n" + aux3);
+                	}
                      break; 
                 case 6:
                 	opcaoW = false;

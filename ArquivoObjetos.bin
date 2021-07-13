@@ -1,11 +1,6 @@
-ContaEspecial [limite=7.0E7, saldo=100000.0, numero=1213.0,
-Agencia [numero=1212, endereco=Padrão],
-Cliente[cpf=02564538029,nome=teste1],
-Cliente[cpf=02564538029,nome=teste2],
-]
-;ContaEspecial [limite=70000.0, saldo=500000.0, numero=7676.0,
-Agencia [numero=12444, endereco=Padrão],
-Cliente[cpf=02564538029,nome=teste3],
-Cliente[cpf=02564538029,nome=teste4],
-]
+ContaEspecial[limite=800000.0,saldo=600000.0,numero=4567,
+Agencia [numeroAg=10101, enderecoAg=Padrão],
+Cliente[cpfCliente=02564538029,nomeCliente=teste1],
+Cliente[cpfCliente=02564538029,nomeCliente=teste2],
+];
 ;
