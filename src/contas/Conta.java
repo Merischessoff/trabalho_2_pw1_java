@@ -1,8 +1,14 @@
 package contas;
 
+import java.io.Serializable;
+
 import agencias.Agencia;
 
-public abstract class  Conta {
+public abstract class  Conta implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double saldo=0;
 	private long numero=0;
 	private Agencia agencia = new Agencia();

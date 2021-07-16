@@ -5,6 +5,10 @@ import agencias.Agencia;
 import clientes.Cliente;
 
 public class ContaEspecial extends Conta implements Comparable<ContaEspecial>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double limite=0;
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 	

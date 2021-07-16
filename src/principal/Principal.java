@@ -58,7 +58,7 @@ public class Principal {
             	    	List <Cliente> listaCliente = new ArrayList<Cliente>();
             	    	int clienteCadastra = 0;
 	            		while(clienteCadastra==0) {
-	                		listaConta = arquivos.montaObjetos();
+	           
 	            	    	Cliente c = new Cliente();
 		                    String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente.");
 		                    c.setNomeCliente(nome);
@@ -99,7 +99,7 @@ public class Principal {
                         	contas += aux.toString() + "\n;";
                         }
                     }
-            		arquivos.gravaObJetosArquivo(contas);
+            		arquivos.salvaObjetos(contas);
                     break;
                 case 2:
 	                //2 – Pesquisar Conta Especial por nome do cliente
