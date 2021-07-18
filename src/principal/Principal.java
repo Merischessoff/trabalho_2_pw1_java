@@ -121,14 +121,19 @@ public class Principal {
 	               	achou = comparaLista(listaConta, nome);
 	               	if (achou) {
 	           			JOptionPane.showMessageDialog(null, "Conta especial encontrada.");
+	           		}else {
+	           			JOptionPane.showMessageDialog(null, "Conta especial não encontrada.");
 	           		}
                 	break;
                 case 3:
                 	//3 – Listar todas as contas
                 	listaConta = arquivos.LeObjetos();
+                	String msg = "";
+                	int tot = listaConta.size();
                 	for(ContaEspecial aux: listaConta) {
-                        JOptionPane.showMessageDialog(null, "Contas especiais encontrada " + aux.toString());
+                        msg += "Conta Especial: \n " + aux.toString() + "\n";
                 	}
+                	JOptionPane.showMessageDialog(null, "Total de contas " + tot + "\n " + msg);
                 	break; 
                 case 4:
                 	//Creditar valor na Conta Especial usando o seu número
