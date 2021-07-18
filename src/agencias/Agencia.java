@@ -1,6 +1,12 @@
 package agencias;
 
-public final class  Agencia {
+import java.io.Serializable;
+
+public final class  Agencia implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numeroAg = 0;
 	private String enderecoAg = "";
 	

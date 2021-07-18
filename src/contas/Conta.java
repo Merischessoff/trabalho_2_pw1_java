@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import agencias.Agencia;
 
-public abstract class  Conta implements Serializable {
+public abstract class Conta implements Serializable {
 	/**
 	 * 
 	 */

@@ -38,17 +38,20 @@ public class ContaEspecial extends Conta implements Comparable<ContaEspecial>{
 
 	@Override
 	public double credita(double aux) {
-		// TODO Auto-generated method stub
-		return super.credita(aux);
+		double saldo = this.getSaldo();
+		saldo += aux;
+		this.setSaldo(saldo);
+		return saldo;
 	}
 
 	@Override
-	public double debita(double aux) {
-		// TODO Auto-generated method stub
-		return super.debita(aux);
+	public double  debita(double aux) {
+		double saldo = this.getSaldo();
+		saldo -= aux;
+		this.setSaldo(saldo);
+		return saldo;
 	}
 
-	
 	@Override
 	public String toString() {
 		if(this.clientes.size() > 0) {

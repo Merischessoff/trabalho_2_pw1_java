@@ -7,6 +7,7 @@ package principal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -47,40 +48,47 @@ public class Principal {
 		e) Enviar projeto elaborado no Eclipse ou compatível, caso contrário o trabalho não será corrigido*/
     	boolean opcaoW = true;
     	TreeSet<ContaEspecial> listaConta = new TreeSet<ContaEspecial>();
+		TreeSet<ContaEspecial> listaContaAux = new TreeSet<ContaEspecial>(); 
     	Arquivo arquivos = new Arquivo();
     	while (opcaoW) {   
         	int opcao = montaMenu();
             switch(opcao){
             	case 1:
             		//1 – Cadastrar Conta Especial
+            		listaConta = new TreeSet<ContaEspecial>();
+            		listaContaAux = arquivos.LeObjetos();
             		boolean cadastra = true;
             		while(cadastra) {
             	    	List <Cliente> listaCliente = new ArrayList<Cliente>();
             	    	int clienteCadastra = 0;
 	            		while(clienteCadastra==0) {
-	           
 	            	    	Cliente c = new Cliente();
 		                    String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente.");
-		                    c.setNomeCliente(nome);
-		                    String cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
-		                    boolean a = c.validaCpf(cpf);
-		                    if(a) {
-		                    	c.setCpfCliente(cpf);
-		                    }else {
-			                    while(!a) {
-			                    	int aux = Integer.parseInt(JOptionPane.showInputDialog(null, "Cpf inválido. para inserir novo cpf, digite 1, para sair digite 2"));
-			                    	if(aux==1) {
-			                    		cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
-			                    		a = c.validaCpf(cpf);
-			                    		if(a)
-			                    			c.setCpfCliente(cpf);
-			                    	}else {
-			                    		System.exit(0);
-			                    	}
+		                    boolean temNoArquivo =  comparaLista(listaContaAux, nome);
+		                    if(!temNoArquivo) {
+			                    c.setNomeCliente(nome);
+			                    String cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
+			                    boolean a = c.validaCpf(cpf);
+			                    if(a) {
+			                    	c.setCpfCliente(cpf);
+			                    }else {
+				                    while(!a) {
+				                    	int aux = Integer.parseInt(JOptionPane.showInputDialog(null, "Cpf inválido. para inserir novo cpf, digite 1, para sair digite 2"));
+				                    	if(aux==1) {
+				                    		cpf = JOptionPane.showInputDialog(null, "Digite o cpf do cliente.");
+				                    		a = c.validaCpf(cpf);
+				                    		if(a)
+				                    			c.setCpfCliente(cpf);
+				                    	}else {
+				                    		System.exit(0);
+				                    	}
+				                    }
 			                    }
+			                    listaCliente.add(c);
+			                    clienteCadastra = JOptionPane.showConfirmDialog(null, "Gostaria de cadastrar mais 1 cliente na conta especial?");
+		                    }else {
+		                    	JOptionPane.showMessageDialog(null, "Nome de cliente ja cadastrado em uma conta especial!");
 		                    }
-		                    listaCliente.add(c);
-		                    clienteCadastra = JOptionPane.showConfirmDialog(null, "Gostaria de cadastrar mais 1 cliente na conta especial?");
 	            		}
 	                    
 	                    int agencia = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da agência."));
@@ -93,83 +101,105 @@ public class Principal {
 	                    listaConta.add(contaEspecial);
 	                    cadastra = false;
             		}
-            		String contas = "";
-            		for (ContaEspecial aux : listaConta) {
-                        if(aux != null) {
-                        	contas += aux.toString() + "\n;";
-                        }
-                    }
-            		arquivos.salvaObjetos(contas);
+            		if(!listaContaAux.isEmpty()) {
+            			for(ContaEspecial aux: listaContaAux) {
+            				listaConta.add(aux);
+            			}
+            		}
+            		boolean gravou = arquivos.salvaObjetos(listaConta);
+            		if(gravou) {
+            			JOptionPane.showMessageDialog(null, "Conta gravada com sucesso!");
+            		}else {
+            			JOptionPane.showMessageDialog(null, "Erro ao gravar conta!");
+            		}
                     break;
                 case 2:
 	                //2 – Pesquisar Conta Especial por nome do cliente
-	                String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente. ");
-	                String contasArquivo = arquivos.LeArquivo();
-	                JOptionPane.showMessageDialog(null, "Conta especial encontrada " + contasArquivo);
-	                String contasArquivoVetor[] = contasArquivo.split(";");
+                	listaConta = arquivos.LeObjetos();
+	               	String nome = JOptionPane.showInputDialog(null, "Digite o nome do cliente.");
 	               	boolean achou = false;
-	               	for (int i=0; i < contasArquivoVetor.length; i++) {
-	               		 if(!achou) {
-		                	if(contasArquivoVetor[i].contains(nome)) {
-		                		JOptionPane.showMessageDialog(null, "Conta especial encontrada " + contasArquivoVetor[i] + "\n");
-		                		 achou = true;
-		                	}
-	               		 }
-	               	 }
-	               	 if (!achou) {
-	           			 JOptionPane.showInputDialog("Conta especial não encontrada ");
-	           		 }
-                	 break;
+	               	achou = comparaLista(listaConta, nome);
+	               	if (achou) {
+	           			JOptionPane.showMessageDialog(null, "Conta especial encontrada.");
+	           		}
+                	break;
                 case 3:
                 	//3 – Listar todas as contas
-                	String contasArquivo1 = arquivos.LeArquivo();
-                	String contasArquivoVetor1[] = contasArquivo1.split(";");
-                	String aux = "";
-                	if(!contasArquivoVetor1.equals(null)) {
-	                	for (int i=0; i < contasArquivoVetor1.length; i++) {
-			                aux += contasArquivoVetor1[i] + "\n";
-		               	}
-	                	JOptionPane.showMessageDialog(null, "Contas Encontradas \n" + aux);
-                	}else {
-		                JOptionPane.showMessageDialog(null, "Nenhuma conta encontrada!");
-	               	}
+                	listaConta = arquivos.LeObjetos();
+                	for(ContaEspecial aux: listaConta) {
+                        JOptionPane.showMessageDialog(null, "Contas especiais encontrada " + aux.toString());
+                	}
                 	break; 
                 case 4:
                 	//Creditar valor na Conta Especial usando o seu número
-                	/*ContaEspecial[
-        	    	limite, saldo, numero,
-        	          	agencia[numero,endereco]
-        	 		]
-        	 		Cliente[cpf,nome]*/            		
+                	listaContaAux = arquivos.LeObjetos();
+            		listaConta = new TreeSet<ContaEspecial>();
+                	long numero = Long.parseLong(JOptionPane.showInputDialog(null, "Digite o numero da conta."));
+                	double valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o valor a ser creditado na conta."));
+                	if(!listaContaAux.isEmpty()) {
+            			for(ContaEspecial aux: listaContaAux) {
+            				if(aux.getNumero()==numero) {
+            					aux.credita(valor);
+            				}
+            				listaConta.add(aux);
+            			}
+            		}
+            		gravou = arquivos.salvaObjetos(listaConta);
+            		if(gravou) {
+            			JOptionPane.showMessageDialog(null, "Conta Creditada com sucesso!");
+            		}else {
+            			JOptionPane.showMessageDialog(null, "Erro ao creditar a conta!");
+            		}
                     break; 
                 case 5:
                 	//Debitar valor da Conta Especial usando o seu número
-                	/*ContaEspecial[
-                	    	limite, saldo, numero,
-                	          	agencia[numero,endereco]
-                	 ]
-                	 Cliente[cpf,nome]*/
-                	String contasArquivo2 = arquivos.LeArquivo();
-                	String contasArquivoVetor2[] = contasArquivo2.split(";");
-                	String aux3 = "";
-                	if(!contasArquivoVetor2.equals(null)) {
-	                	for (int i=0; i < contasArquivoVetor2.length; i++) {
-			                aux3 += contasArquivoVetor2[i] + "\n";
-		               	}
-	                	System.out.println("Contas Encontradas \n" + aux3);
-                	}
-                     break; 
+                	listaContaAux = arquivos.LeObjetos();
+            		listaConta = new TreeSet<ContaEspecial>();
+                	numero = Long.parseLong(JOptionPane.showInputDialog(null, "Digite o numero da conta."));
+                	valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o valor a ser debitado na conta."));
+                	if(!listaContaAux.isEmpty()) {
+            			for(ContaEspecial aux: listaContaAux) {
+            				if(aux.getNumero()==numero) {
+            					aux.credita(valor);
+            				}
+            				listaConta.add(aux);
+            			}
+            		}
+            		gravou = arquivos.salvaObjetos(listaConta);
+            		if(gravou) {
+            			JOptionPane.showMessageDialog(null, "Conta debitada com sucesso!");
+            		}else {
+            			JOptionPane.showMessageDialog(null, "Erro ao debitar a conta!");
+            		}
+                    break; 
                 case 6:
                 	opcaoW = false;
                 	break;
                 }//switch                 
        }
     }
+    
     private static int montaMenu(){
         String str = "";
         for(OpcoesMenu op : OpcoesMenu.values())
             str +=  op.toString() + "\n";
         return Integer.parseInt(JOptionPane.showInputDialog(str));             
+    }
+    
+    private static boolean comparaLista(TreeSet<ContaEspecial> lista1, String nome) {
+    	boolean achou = false;
+    	for (ContaEspecial aux: lista1) {
+        	int i = 0;
+        	while(i < aux.getClientes().size()) {
+           		 if(!achou) {
+                	if(aux.getClientes().get(i).getNomeCliente().equalsIgnoreCase(nome)) {
+		               	achou = true;
+                	}
+           		 }
+           		 i++;
+        	}
+        }
+		return achou;
     }
 }
     

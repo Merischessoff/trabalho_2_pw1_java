@@ -1,10 +1,15 @@
 package clientes;
+import java.io.Serializable;
 import java.util.InputMismatchException;
 
 import contas.ContaEspecial;
 import util.Validador;
 
-public class Cliente implements Validador{
+public class Cliente implements Validador, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5157047055184071671L;
 	private String cpfCliente = "";
 	private String nomeCliente = "";	
 	public Cliente() { }
